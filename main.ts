@@ -53,15 +53,13 @@ namespace SL06 {
     //%block="SL06 begin"
     //%advanced=true
     //%group=Optional
-    export function begin(): boolean {
+    export function begin(): void {
         let id: number
         id = wireReadDataByte(APDS9960_I2C_ADDR)
 
         /* Set ENABLE register to 0 (disable all features) */
         // ALL, OFF
-        if (!setMode(7, 0)) {
-            return false;
-        }
+        setMode(7, 0)
 
         /* Set default values for ambient light and proximity registers */
         // APDS9960_ATIME, DEFAULT_ATIME
@@ -151,7 +149,6 @@ namespace SL06 {
         // DEFAULT_GIEN
         setGestureIntEnable(0)
 
-        return true;
     }
 
     //%blockId=SL06_getMode
@@ -170,7 +167,7 @@ namespace SL06 {
     }
 
     //%blockId=SL06_setMode
-    //%block="SL06 set mode"
+    //%block="SL06 set mode %mode %enable"
     //%advanced=true
     //%group=Optional
     export function setMode(mode: NumberFormat.UInt8BE, enable: NumberFormat.UInt8BE): boolean {
@@ -227,7 +224,8 @@ namespace SL06 {
     }
 
     //%blockId=SL06_enableGestureSensor
-    //%block="SL06 enable gesture sensor"
+    //%block="SL06 enable gesture sensor %interrupts"
+    //% interrupts.defl=false
     //%group=Gesture
     export function enableGestureSensor(interrupts: boolean):void
     {
@@ -301,10 +299,10 @@ namespace SL06 {
     }
 
     //%blockId=SL06_setLEDDRive
-    //%block="SL06 set LED drive"
+    //%block="SL06 set LED drive %drive"
     //%advanced=true
     //%group=Optional
-    export function setLEDDrive(drive: NumberFormat.UInt8BE): boolean
+    export function setLEDDrive(drive: NumberFormat.UInt8BE): void
     {
         let val: NumberFormat.UInt8BE = 0;
 
@@ -322,7 +320,6 @@ namespace SL06 {
         // APDS9960_CONTROL, val
         wireWriteDataByte(0x8F, val)
 
-        return true;
     }
 
     //%blockId=SL06_getGestureLEDDrive
@@ -344,7 +341,7 @@ namespace SL06 {
     }
 
     //%blockId=SL06_setGestureLEDDrive
-    //%block="SL06 set gesture LED drive"
+    //%block="SL06 set gesture LED drive %drive"
     //%group=Gesture
     //%advanced=true
     export function setGestureLEDDrive(drive: number) {
@@ -384,7 +381,7 @@ namespace SL06 {
     }
 
     //%blockId=SL06_setGestureGain
-    //%block="SL06 set gesture gain"
+    //%block="SL06 set gesture gain %gain"
     //%advanced=true
     //%group=Gesture
     export function setGestureGain(gain: number )
@@ -426,10 +423,10 @@ namespace SL06 {
     }
 
     //%blockId=SL06_setGestureIntEnable
-    //%block="SL06 set gesture int enable"
+    //%block="SL06 set gesture int enable %enable"
     //%group=Gesture
     //%advanced=true
-    export function setGestureIntEnable(enable: number)
+    export function setGestureIntEnable(enable: number):void
     {
         let val = 0;
 
@@ -445,8 +442,7 @@ namespace SL06 {
         /* Write register value back into GCONF4 register */
         // APDS9960_GCONF4
         wireWriteDataByte(0xAB, val)
-
-        return true;
+        
     }
 
     //%blockId=SL06_isGestureAvailable
@@ -763,7 +759,8 @@ namespace SL06 {
     }
 
     //%blockId=SL06_enableProximitySensor
-    //%block="SL06 enable proximity sensor"
+    //%block="SL06 enable proximity sensor %interrupts"
+    //%interrupts.defl=false
     //%group=Proximity
     export function enableProximitySensor(interrupts: boolean):void
     {
@@ -795,7 +792,7 @@ namespace SL06 {
         setMode(2, 0)
     }
 
-    function setProximityIntEnable(enable: number)
+    function setProximityIntEnable(enable: number):void
     {
         let val: number;
 
@@ -813,7 +810,6 @@ namespace SL06 {
         // APDS9960_ENABLE
         wireWriteDataByte(0x80, val)
 
-        return true;
     }
 
     //%blockId=SL06_getProximityGain
@@ -835,10 +831,10 @@ namespace SL06 {
     }
 
     //%blockId=SL06_setProximityGain
-    //%block="SL06 set proximity gain"
+    //%block="SL06 set proximity gain %drive"
     //%advanced=true
     //%group=Proximity
-    export function setProximityGain(drive: NumberFormat.UInt8BE)
+    export function setProximityGain(drive: NumberFormat.UInt8BE):void
     {
         let val: number;
 
@@ -855,8 +851,6 @@ namespace SL06 {
         /* Write register value back into CONTROL register */
         // APDS9960_CONTROL
         wireWriteDataByte(0x8F, val)
-
-        return true;
     }
 
     //%blockId=SL06_getProximity
@@ -874,7 +868,8 @@ namespace SL06 {
     }
 
     //%blockId=SL06_enableLightSensor
-    //%block="SL06 enable light sensor"
+    //%block="SL06 enable light sensor %interrupts"
+    //%interrupts.defl=false
     //%group=Light
     export function enableLightSensor(interrupts: boolean):void
     {
@@ -925,10 +920,10 @@ namespace SL06 {
     }
 
     //%blockId=SL06_setAmbientLightGain
-    //%block="SL06 set ambient light gain"
+    //%block="SL06 set ambient light gain %drive"
     //%group=Light
     //%advanced=true
-    export function setAmbientLightGain(drive: number)
+    export function setAmbientLightGain(drive: number): void
     {
         let val: number;
 
@@ -944,21 +939,17 @@ namespace SL06 {
         /* Write register value back into CONTROL register */
         // APDS9960_CONTROL
         wireWriteDataByte(0x8F, val)
-
-        return true;
     }
 
     //%blockId=SL06_clearAmbientLightInt
     //%block="SL06 clear ambient light int"
     //%group=Light
     //%advanced=true
-    export function clearAmbientLightInt()
+    export function clearAmbientLightInt():void
     {
         let throwaway: number;
         // APDS9960_AICLEAR
         throwaway = wireReadDataByte(0xE7)
-
-        return true;
     }
 
     //%blockId=SL06_getAmbientLight
@@ -1108,24 +1099,18 @@ namespace SL06 {
         return true;
     }
 
-    function setGestureEnterThresh(threshold: number)
+    function setGestureEnterThresh(threshold: number):void
         {
         // APDS9960_GPENTH
-        if (!wireWriteDataByte(0xA0, threshold)) {
-            return false;
-        }
+        wireWriteDataByte(0xA0, threshold)
 
-        return true;
     }
 
-    function setGestureExitThresh(threshold: number)
+    function setGestureExitThresh(threshold: number):void
     {
         // APDS9960_GEXTH
-        if (!wireWriteDataByte(0xA1, threshold)) {
-            return false;
-        }
+        wireWriteDataByte(0xA1, threshold)
 
-        return true;
     }
 
     function setGestureWaitTime(time: number)
@@ -1201,7 +1186,7 @@ namespace SL06 {
         gesture_motion_ = DIR_NONE;
     }
 
-    function setAmbientLightIntEnable(enable: number)
+    function setAmbientLightIntEnable(enable: number):void
     {
         let val: number;
 
@@ -1218,8 +1203,6 @@ namespace SL06 {
         /* Write register value back into ENABLE register */
         // APDS9960_ENABLE
         wireWriteDataByte(0x80, val)
-
-        return true;
     }
 
 
