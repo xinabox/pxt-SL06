@@ -476,7 +476,7 @@ namespace SL06 {
         let fifo_level = 0;
         let bytes_read = 0;
         let gstatus:number;
-        let fifo_data: Buffer = pins.createBuffer(128)
+        let fifo_data: number[] = []
         let motion:string;
         let i:number;
         let mode: number = getMode() & 0b01000001
@@ -509,6 +509,8 @@ namespace SL06 {
                 if (fifo_level > 0) {
                     // APDS9960_GFIFO_U
                     fifo_data = wireReadDataBlock(0xFC,(fifo_level * 4));
+
+                    bytes_read = fifo_data.length
 
                     /* If at least 1 set of data, sort the data into U/D/L/R */
                     if (fifo_data.length >= 4) {
@@ -1229,12 +1231,15 @@ namespace SL06 {
        return val
     }
 
-    function wireReadDataBlock(reg: NumberFormat.UInt8BE, len:number): Buffer
-    {
-        let buff = pins.createBuffer(len)
+    function wireReadDataBlock(reg: NumberFormat.UInt8BE, len: number): number[] {
+        let buff: number[] = []
 
         pins.i2cWriteNumber(APDS9960_I2C_ADDR, reg);
-        buff =  pins.i2cReadBuffer(APDS9960_I2C_ADDR, len)
+        for (let i = 0; i < len; i++) {
+            buff[i] = pins.i2cReadNumber(APDS9960_I2C_ADDR, NumberFormat.UInt8BE)
+        }
+
+
         return buff
     }
 
