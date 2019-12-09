@@ -1,7 +1,7 @@
 {
-    "name": "pxt-SL06",
+    "name": "SL06",
     "version": "0.0.0",
-    "description": "",
+    "description": "XinaBox SL06 Gesture, Proximity, Color and Light Sensor",
     "dependencies": {
         "core": "*"
     },
