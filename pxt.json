@@ -1,9 +1,10 @@
 {
     "name": "SL06",
-    "version": "0.0.0",
-    "description": "XinaBox SL06 Gesture, Proximity, Color and Light Sensor",
+    "version": "0.0.1",
+    "description": "XinaBox SL06 Gesture sensor: Gesture, Proximity, Color and Light Sensor",
     "dependencies": {
-        "core": "*"
+        "core": "*",
+        "xinabox-cs11": "*"
     },
     "files": [
         "README.md",
@@ -13,5 +14,5 @@
         "test.ts"
     ],
     "public": true,
-    "preferredEditor": "tsprj"
+	"preferredEditor": "blocksprj"
 }
