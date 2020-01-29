@@ -3,8 +3,7 @@
     "version": "0.0.1",
     "description": "XinaBox SL06 Gesture sensor: Gesture, Proximity, Color and Light Sensor",
     "dependencies": {
-        "core": "*",
-        "xinabox-cs11": "*"
+        "core": "*"
     },
     "files": [
         "README.md",
