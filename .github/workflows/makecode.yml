@@ -3,8 +3,14 @@ name: MakeCode
 on: [push]
 
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    if: "! contains(github.event.head_commit.message, '[skip ci]')"
+    steps:
+      - run: echo "${{ github.event.head_commit.message }}"
+        
   build:
-
+    needs: prepare
     runs-on: ubuntu-latest
 
     strategy:
@@ -17,7 +23,27 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: maker
+
+      - name: microbit pxt.json  
+        uses: datamonsters/replace-action@master
+        with:
+          files: 'pxt.json'
+          replacements: 'core=microbit' 
+      - name: microbit compilation
+        run: |
+          npm install -g pxt
+          pxt target microbit
+          pxt install
+          pxt build --cloud
+        env:
+          CI: true
+
+      - name: maker pxt.json          
+        uses: datamonsters/replace-action@master
+        with:
+          files: 'pxt.json'
+          replacements: 'core=xinabox-cs11,test.ts=dummy.ts'
+      - name: maker compilation
         run: |
           npm install -g pxt
           pxt target maker
@@ -25,11 +51,3 @@ jobs:
           pxt build --cloud
         env:
           CI: true
-     # - name: microbit
-     #   run: |
-     #     npm install -g pxt
-     #     pxt target microbit
-     #     pxt install
-     #     pxt build --cloud
-     #   env:
-     #     CI: true
