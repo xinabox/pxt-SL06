@@ -1,6 +1,9 @@
 name: microbit
 
-on: [push]
+on:
+  push:
+  schedule:
+    - cron: '0 0 12 * * SUN'
 
 jobs:
   prepare:
