@@ -3,7 +3,7 @@ name: maker
 on:
   push:
   schedule:
-    - cron: '0 0 12 * * SUN'
+    - cron: '0 0 0 1/14 * ? *'
 
 jobs:
   prepare:
