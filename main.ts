@@ -492,7 +492,7 @@ namespace SL06 {
 
             /* Wait some time to collect next batch of FIFO data */
             // FIFO_PAUSE_TIME
-            loops.pause(30);
+            basic.pause(30);
 
             /* Get the contents of the STATUS register. Is data still valid? */
             // APDS9960_GSTATUS
@@ -537,7 +537,7 @@ namespace SL06 {
             } else {
 
                 /* Determine best guessed gesture and clean up */
-                loops.pause(30);
+                basic.pause(30);
                 decodeGesture();
                 motion = gesture_motion_;
                 resetGestureParameters();
