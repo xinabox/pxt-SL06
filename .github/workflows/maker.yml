@@ -1,6 +1,9 @@
-name: MakeCode
+name: maker
 
-on: [push]
+on:
+  push:
+  schedule:
+    - cron: '0 0 12 * * SUN'
 
 jobs:
   prepare:
@@ -23,20 +26,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-
-      - name: microbit pxt.json  
-        uses: datamonsters/replace-action@master
-        with:
-          files: 'pxt.json'
-          replacements: 'core=microbit' 
-      - name: microbit compilation
-        run: |
-          npm install -g pxt
-          pxt target microbit
-          pxt install
-          pxt build --cloud
-        env:
-          CI: true
 
       - name: maker pxt.json          
         uses: datamonsters/replace-action@master
