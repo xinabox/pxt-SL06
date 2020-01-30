@@ -1210,7 +1210,7 @@ namespace SL06 {
 
     function wireWriteByte(val: NumberFormat.UInt8BE): boolean
     {
-        pins.i2cWriteNumber(APDS9960_I2C_ADDR, val)
+        pins.i2cWriteNumber(APDS9960_I2C_ADDR, val,NumberFormat.UInt8BE)
         return true;
     }
 
@@ -1226,7 +1226,7 @@ namespace SL06 {
 
     function wireReadDataByte(reg: number): number
     {
-       pins.i2cWriteNumber(APDS9960_I2C_ADDR, reg);
+        pins.i2cWriteNumber(APDS9960_I2C_ADDR, reg, NumberFormat.UInt8BE);
        let val: number = pins.i2cReadNumber(APDS9960_I2C_ADDR, NumberFormat.UInt8BE)
        return val
     }
@@ -1234,7 +1234,7 @@ namespace SL06 {
     function wireReadDataBlock(reg: NumberFormat.UInt8BE, len: number): number[] {
         let buff: number[] = []
 
-        pins.i2cWriteNumber(APDS9960_I2C_ADDR, reg);
+        pins.i2cWriteNumber(APDS9960_I2C_ADDR, reg, NumberFormat.UInt8BE);
         for (let i = 0; i < len; i++) {
             buff[i] = pins.i2cReadNumber(APDS9960_I2C_ADDR, NumberFormat.UInt8BE)
         }
