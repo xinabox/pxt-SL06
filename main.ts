@@ -87,7 +87,7 @@ namespace SL06 {
         setProximityGain(2)
 
         // DEFAULT_AGAIN
-        setAmbientLightGain(1)
+        setAmbientLightGain(0)
 
         // DEFAULT_PILT
         setProxIntLowThresh(0)
