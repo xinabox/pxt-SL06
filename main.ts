@@ -1202,7 +1202,7 @@ namespace SL06 {
         buff[len - 1] = pins.i2cReadNumber(APDS9960_I2C_ADDR, NumberFormat.UInt8BE, false)
 
 
-        return buff
+        return buff;
     }
 
     begin();
