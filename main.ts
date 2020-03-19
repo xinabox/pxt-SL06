@@ -484,7 +484,8 @@ namespace SL06 {
             /* Get the contents of the STATUS register. Is data still valid? */
             // APDS9960_GSTATUS
             gstatus = wireReadDataByte(0xAF)
-
+            
+            console.logValue("gstatus", gstatus)
             /* If we have valid data, read in FIFO */
             if ((gstatus & 0b00000001) == 0b00000001) {
 
@@ -508,11 +509,6 @@ namespace SL06 {
                             gesture_data_r_data[gesture_data_index] = fifo_data[i + 3];
                             gesture_data_index++;
                             gesture_data_total_gestures++;
-
-                            console.logValue("1", fifo_data[i + 0])
-                            console.logValue("2", fifo_data[i + 1])
-                            console.logValue("3", fifo_data[i + 2])
-                            console.logValue("4", fifo_data[i + 3])
                         }
 
                         /* Filter and process gesture data. Decode near/far state */
