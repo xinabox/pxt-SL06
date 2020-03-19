@@ -492,17 +492,17 @@ namespace SL06 {
 
                 /* Read the current FIFO level */
                 // APDS9960_GFLVL
-                //fifo_level = wireReadDataByte(0xAE)
+                fifo_level = wireReadDataByte(0xAE)
 
                 /* If there's stuff in the FIFO, read it into our data block */
-                //if (fifo_level > 0) {
-                    // APDS9960_GFIFO_U
-                  //  fifo_data = wireReadDataBlock(0xFC, (fifo_level * 4));
+                if (fifo_level > 0) {
+                     //APDS9960_GFIFO_U
+                    fifo_data = wireReadDataBlock(0xFC, (fifo_level * 4));
 
-                    //bytes_read = fifo_data.length
+                    bytes_read = fifo_data.length
 
                     /* If at least 1 set of data, sort the data into U/D/L/R */
-                    /*if (fifo_data.length >= 4) {
+                    if (fifo_data.length >= 4) {
                         for (i = 0; i < bytes_read; i += 4) {
                             gesture_data_u_data[gesture_data_index] = fifo_data[i + 0];
                             gesture_data_d_data[gesture_data_index] = fifo_data[i + 1];
@@ -510,10 +510,10 @@ namespace SL06 {
                             gesture_data_r_data[gesture_data_index] = fifo_data[i + 3];
                             gesture_data_index++;
                             gesture_data_total_gestures++;
-                        }*/
+                        }
 
                         /* Filter and process gesture data. Decode near/far state */
-                        /*if (processGestureData()) {
+                        if (processGestureData()) {
                             if (decodeGesture()) {
                             }
                         }
@@ -521,16 +521,16 @@ namespace SL06 {
                         /* Reset data */
                         gesture_data_index = 0;
                         gesture_data_total_gestures = 0;
-                    //}
-                //}
+                    }
+                }
             } else {
 
                 /* Determine best guessed gesture and clean up */
                 basic.pause(30);
-                /*decodeGesture();
+                decodeGesture();
                 motion = gesture_motion_;
                 resetGestureParameters();
-                return motion;*/
+                return motion;
                 console.log("Else")
             }
         }
