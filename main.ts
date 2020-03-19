@@ -495,15 +495,15 @@ namespace SL06 {
                 fifo_level = wireReadDataByte(0xAE)
 
                 /* If there's stuff in the FIFO, read it into our data block */
-                /*if (fifo_level > 0) {
+                if (fifo_level > 0) {
                     //APDS9960_GFIFO_U
                     fifo_data = wireReadDataBlock(0xFC, (fifo_level * 4));
 
-                    bytes_read = fifo_data.length*/
+                    bytes_read = fifo_data.length
 
                 /* If at least 1 set of data, sort the data into U/D/L/R */
-                /*if (fifo_data.length >= 4) {
-                    for (i = 0; i < bytes_read; i += 4) {
+                if (fifo_data.length >= 4) {
+                    /*for (i = 0; i < bytes_read; i += 4) {
                         gesture_data_u_data[gesture_data_index] = fifo_data[i + 0];
                         gesture_data_d_data[gesture_data_index] = fifo_data[i + 1];
                         gesture_data_l_data[gesture_data_index] = fifo_data[i + 2];
@@ -521,8 +521,8 @@ namespace SL06 {
                 /* Reset data */
                 gesture_data_index = 0;
                 gesture_data_total_gestures = 0;
-                //}
-                //}
+                    }
+                }
             } else {
 
                 /* Determine best guessed gesture and clean up */
