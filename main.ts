@@ -492,12 +492,12 @@ namespace SL06 {
 
                 /* Read the current FIFO level */
                 // APDS9960_GFLVL
-                //fifo_level = wireReadDataByte(0xAE)
+                fifo_level = wireReadDataByte(0xAE)
 
                 /* If there's stuff in the FIFO, read it into our data block */
                 if (fifo_level > 0) {
                     //APDS9960_GFIFO_U
-                    fifo_data = wireReadDataBlock(0xFC, (fifo_level * 4));
+                    //fifo_data = wireReadDataBlock(0xFC, (fifo_level * 4));
 
                     bytes_read = fifo_data.length
 
