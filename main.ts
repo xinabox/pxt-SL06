@@ -1195,12 +1195,11 @@ namespace SL06 {
         let buff: number[] = []
 
         pins.i2cWriteNumber(APDS9960_I2C_ADDR, reg, NumberFormat.UInt8BE);
-        pins.i2cReadBuffer(APDS9960_I2C_ADDR, len,true)
-        /*for (let i = 0; i < len - 1; i++) {
-            buff[i] = pins.i2cReadNumber(APDS9960_I2C_ADDR, NumberFormat.UInt8BE, true)
+        pins.i2cReadBuffer(APDS9960_I2C_ADDR, len, true)
+        for (let i = 0; i < len - 1; i++) {
+            pins.i2cWriteNumber(APDS9960_I2C_ADDR, reg, NumberFormat.UInt8BE);
+            buff[i] = pins.i2cReadNumber(APDS9960_I2C_ADDR, NumberFormat.UInt8BE)
         }
-
-        buff[len - 1] = pins.i2cReadNumber(APDS9960_I2C_ADDR, NumberFormat.UInt8BE, true)*/
 
 
         return buff
