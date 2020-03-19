@@ -87,7 +87,7 @@ namespace SL06 {
         setProximityGain(2)
 
         // DEFAULT_AGAIN
-        setAmbientLightGain(1)
+        setAmbientLightGain(0)
 
         // DEFAULT_PILT
         setProxIntLowThresh(0)
@@ -858,7 +858,7 @@ namespace SL06 {
     export function enableLightSensor(interrupts: boolean): void {
 
         /* Set default gain, interrupts, enable power, and enable sensor */
-        setAmbientLightGain(1)
+        setAmbientLightGain(0)
 
         if (interrupts) {
             setAmbientLightIntEnable(1)
