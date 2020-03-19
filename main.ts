@@ -484,8 +484,9 @@ namespace SL06 {
             /* Get the contents of the STATUS register. Is data still valid? */
             // APDS9960_GSTATUS
             gstatus = wireReadDataByte(0xAF)
-            
+
             console.logValue("gstatus", gstatus)
+            
             /* If we have valid data, read in FIFO */
             if ((gstatus & 0b00000001) == 0b00000001) {
 
