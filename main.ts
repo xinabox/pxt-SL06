@@ -230,10 +230,10 @@ namespace SL06 {
     }
 
     //%blockId=SL06_enableGestureSensor
-    //%block="SL06 enable gesture sensor %interrupts"
+    //%block="SL06 enable gesture sensor"
     //% interrupts.defl=false
     //%group=Gesture
-    export function enableGestureSensor(interrupts: boolean): void {
+    export function enableGestureSensor(): void {
 
         /* Enable gesture mode
            Set ENABLE to 0 (power off)
@@ -251,12 +251,8 @@ namespace SL06 {
         // LED_BOOST_300
         setLEDBoost(3)
 
-        if (interrupts) {
-            setGestureIntEnable(1)
-        }
-        else {
-            setGestureIntEnable(0)
-        }
+        setGestureIntEnable(0)
+        
         setGestureMode(1)
 
         enablePower()
@@ -757,10 +753,10 @@ namespace SL06 {
     }
 
     //%blockId=SL06_enableProximitySensor
-    //%block="SL06 enable proximity sensor %interrupts"
+    //%block="SL06 enable proximity sensor"
     //%interrupts.defl=false
     //%group=Proximity
-    export function enableProximitySensor(interrupts: boolean): void {
+    export function enableProximitySensor(): void {
         /* Set default gain, LED, interrupts, enable power, and enable sensor */
         // DEFAULT_PGAIN
         setProximityGain(2)
@@ -768,11 +764,8 @@ namespace SL06 {
         // DEFAULT_LDRIVE
         setLEDDrive(0)
 
-        if (interrupts) {
-            setProximityIntEnable(1)
-        } else {
-            setProximityIntEnable(0)
-        }
+        setProximityIntEnable(0)
+
         enablePower()
 
         setMode(2, 1)
@@ -860,20 +853,16 @@ namespace SL06 {
     }
 
     //%blockId=SL06_enableLightSensor
-    //%block="SL06 enable light sensor %interrupts"
+    //%block="SL06 enable light sensor"
     //%interrupts.defl=false
     //%group=Light
-    export function enableLightSensor(interrupts: boolean): void {
+    export function enableLightSensor(): void {
 
         /* Set default gain, interrupts, enable power, and enable sensor */
         setAmbientLightGain(0)
 
-        if (interrupts) {
-            setAmbientLightIntEnable(1)
-        }
-        else {
-            setAmbientLightIntEnable(0)
-        }
+        setAmbientLightIntEnable(0)
+
         enablePower()
 
         // AMBIENT_LIGHT
