@@ -158,8 +158,8 @@ namespace SL06 {
         setGestureIntEnable(0)
 
         enableLightSensor(false)
-        enableProximitySensor(false)
-        enableGestureSensor(false)
+        /*enableProximitySensor(false)
+        enableGestureSensor(false)*/
 
     }
 
