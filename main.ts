@@ -157,10 +157,6 @@ namespace SL06 {
         // DEFAULT_GIEN
         setGestureIntEnable(0)
 
-        enableLightSensor(false)
-        /*enableProximitySensor(false)
-        enableGestureSensor(false)*/
-
     }
 
     //%blockId=SL06_getMode
@@ -237,7 +233,7 @@ namespace SL06 {
     //%block="SL06 enable gesture sensor %interrupts"
     //% interrupts.defl=false
     //%group=Gesture
-    function enableGestureSensor(interrupts: boolean): void {
+    export function enableGestureSensor(interrupts: boolean): void {
 
         /* Enable gesture mode
            Set ENABLE to 0 (power off)
@@ -278,7 +274,7 @@ namespace SL06 {
     //%blockId=SL06_disableGestureSensor
     //%block="SL06 disable gesture sensor"
     //%group=Gesture
-    function disableGestureSensor() {
+    export function disableGestureSensor() {
         resetGestureParameters();
         setGestureIntEnable(0)
 
@@ -764,7 +760,7 @@ namespace SL06 {
     //%block="SL06 enable proximity sensor %interrupts"
     //%interrupts.defl=false
     //%group=Proximity
-    function enableProximitySensor(interrupts: boolean): void {
+    export function enableProximitySensor(interrupts: boolean): void {
         /* Set default gain, LED, interrupts, enable power, and enable sensor */
         // DEFAULT_PGAIN
         setProximityGain(2)
@@ -786,7 +782,7 @@ namespace SL06 {
     //%blockId=SL06_disableProximitySensor
     //%block="SL06 disble proximity sensor"
     //%group=Proximity
-    function disableProximitySensor(): void {
+    export function disableProximitySensor(): void {
         setProximityIntEnable(0)
 
         setMode(2, 0)
@@ -867,7 +863,7 @@ namespace SL06 {
     //%block="SL06 enable light sensor %interrupts"
     //%interrupts.defl=false
     //%group=Light
-    function enableLightSensor(interrupts: boolean): void {
+    export function enableLightSensor(interrupts: boolean): void {
 
         /* Set default gain, interrupts, enable power, and enable sensor */
         setAmbientLightGain(0)
@@ -888,7 +884,7 @@ namespace SL06 {
     //%blockId=SL06_disableLightSensor
     //%block="SL06 disable light sensor"
     //%group=Light
-    function disableLightSensor(): void {
+    export function disableLightSensor(): void {
         setAmbientLightIntEnable(0)
 
         // AMBIENT_LIGHT
