@@ -486,7 +486,7 @@ namespace SL06 {
 
             /* Get the contents of the STATUS register. Is data still valid? */
             // APDS9960_GSTATUS
-            gstatus = wireReadDataByte(0xAF)
+            gstatus = wireReadDataByte(0xAF);
 
             /* If we have valid data, read in FIFO */
             if ((gstatus & 0b00000001) == 0b00000001) {
