@@ -507,14 +507,14 @@ namespace SL06 {
 
                     /* If at least 1 set of data, sort the data into U/D/L/R */
                     if (fifo_data.length >= 4) {
-                        /*for (i = 0; i < bytes_read; i += 4) {
+                        for (i = 0; i < bytes_read; i += 4) {
                             gesture_data_u_data[gesture_data_index] = fifo_data[i + 0];
                             gesture_data_d_data[gesture_data_index] = fifo_data[i + 1];
                             gesture_data_l_data[gesture_data_index] = fifo_data[i + 2];
                             gesture_data_r_data[gesture_data_index] = fifo_data[i + 3];
                             gesture_data_index++;
                             gesture_data_total_gestures++;
-                        }*/
+                        }
 
                         /* Filter and process gesture data. Decode near/far state */
                         if (processGestureData()) {
@@ -1195,9 +1195,7 @@ namespace SL06 {
         let buff: number[] = []
 
         pins.i2cWriteNumber(APDS9960_I2C_ADDR, reg, NumberFormat.UInt8BE);
-        pins.i2cReadBuffer(APDS9960_I2C_ADDR, len, true)
         for (let i = 0; i < len; i++) {
-            pins.i2cWriteNumber(APDS9960_I2C_ADDR, reg, NumberFormat.UInt8BE);
             buff[i] = pins.i2cReadNumber(APDS9960_I2C_ADDR, NumberFormat.UInt8BE)
         }
 
