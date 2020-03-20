@@ -49,11 +49,19 @@ namespace SL06 {
     let gesture_state_ = 0;
     let gesture_motion_ = DIR_NONE;
 
+    export enum light_unit
+    {
+        //% block="LUX"
+        LUX = 1,
+        //% block="FC"
+        FC = 2
+    }
+
     //%blockId=SL06_begin
     //%block="SL06 begin"
     //%advanced=true
     //%group=Optional
-    export function begin(): void {
+    function begin(): void {
         let id: number
         id = wireReadDataByte(APDS9960_I2C_ADDR)
 
@@ -149,13 +157,17 @@ namespace SL06 {
         // DEFAULT_GIEN
         setGestureIntEnable(0)
 
+        enableLightSensor(false)
+        enableProximitySensor(false)
+        enableGestureSensor(false)
+
     }
 
     //%blockId=SL06_getMode
     //%block="SL06 get mode"
     //%advanced=true
     //%group=Optional
-    export function getMode(): number {
+    function getMode(): number {
         let enable_value: number;
 
         /* Read current ENABLE register */
@@ -169,7 +181,7 @@ namespace SL06 {
     //%block="SL06 set mode %mode %enable"
     //%advanced=true
     //%group=Optional
-    export function setMode(mode: NumberFormat.UInt8BE, enable: NumberFormat.UInt8BE): boolean {
+    function setMode(mode: NumberFormat.UInt8BE, enable: NumberFormat.UInt8BE): boolean {
         let reg_val: NumberFormat.UInt8BE;
 
         /* Read current ENABLE register */
@@ -210,14 +222,14 @@ namespace SL06 {
     //%blockId=SL06_enablePower
     //%block="SL06 enable power"
     //%group=Optional
-    export function enablePower() {
+    function enablePower() {
         setMode(0, 1)
     }
 
     //%blockId=SL06_disablePower
     //%block="SL06 disable power"
     //%group=Optional
-    export function disbalePower() {
+    function disbalePower() {
         setMode(0, 0)
     }
 
@@ -225,7 +237,7 @@ namespace SL06 {
     //%block="SL06 enable gesture sensor %interrupts"
     //% interrupts.defl=false
     //%group=Gesture
-    export function enableGestureSensor(interrupts: boolean): void {
+    function enableGestureSensor(interrupts: boolean): void {
 
         /* Enable gesture mode
            Set ENABLE to 0 (power off)
@@ -266,7 +278,7 @@ namespace SL06 {
     //%blockId=SL06_disableGestureSensor
     //%block="SL06 disable gesture sensor"
     //%group=Gesture
-    export function disableGestureSensor() {
+    function disableGestureSensor() {
         resetGestureParameters();
         setGestureIntEnable(0)
 
@@ -280,7 +292,7 @@ namespace SL06 {
     //%block="SL06 get LED drive"
     //%advanced=true
     //%group=Optional
-    export function getLEDDrive() {
+    function getLEDDrive() {
         let val: number;
 
         /* Read value from CONTROL register */
@@ -297,7 +309,7 @@ namespace SL06 {
     //%block="SL06 set LED drive %drive"
     //%advanced=true
     //%group=Optional
-    export function setLEDDrive(drive: NumberFormat.UInt8BE): void {
+    function setLEDDrive(drive: NumberFormat.UInt8BE): void {
         let val: NumberFormat.UInt8BE = 0;
 
         /* Read value from CONTROL register */
@@ -320,7 +332,7 @@ namespace SL06 {
     //%block="SL06 get gesture LED drive"
     //%advanced=true
     //%group=Gesture
-    export function getGestureLEDDrive() {
+    function getGestureLEDDrive() {
         let val: number;
 
         /* Read value from GCONF2 register */
@@ -337,7 +349,7 @@ namespace SL06 {
     //%block="SL06 set gesture LED drive %drive"
     //%group=Gesture
     //%advanced=true
-    export function setGestureLEDDrive(drive: number) {
+    function setGestureLEDDrive(drive: number) {
         let val: number;
 
         /* Read value from GCONF2 register */
@@ -359,7 +371,7 @@ namespace SL06 {
     //%block="SL06 get gesture gain"
     //%advanced=true
     //%group=Gesture
-    export function getGestureGain() {
+    function getGestureGain() {
         let val: number;
 
         /* Read value from GCONF2 register */
@@ -376,7 +388,7 @@ namespace SL06 {
     //%block="SL06 set gesture gain %gain"
     //%advanced=true
     //%group=Gesture
-    export function setGestureGain(gain: number) {
+    function setGestureGain(gain: number) {
         let val: number;
 
         /* Read value from GCONF2 register */
@@ -399,7 +411,7 @@ namespace SL06 {
     //%block="SL06 get gesture int enable"
     //%advanced=true
     //%group=Gesture
-    export function getGestureIntEnable() {
+    function getGestureIntEnable() {
         let val = 0;
 
         /* Read value from GCONF4 register */
@@ -416,7 +428,7 @@ namespace SL06 {
     //%block="SL06 set gesture int enable %enable"
     //%group=Gesture
     //%advanced=true
-    export function setGestureIntEnable(enable: number): void {
+    function setGestureIntEnable(enable: number): void {
         let val = 0;
 
         /* Read value from GCONF4 register */
@@ -437,7 +449,7 @@ namespace SL06 {
     //%blockId=SL06_isGestureAvailable
     //%block="SL06 is gesture available"
     //%group=Gesture
-    export function isGestureAvailable() {
+    function isGestureAvailable() {
         let val = 0;
 
         /* Read value from GSTATUS register */
@@ -457,9 +469,9 @@ namespace SL06 {
     }
 
     //%blockId=SL06_getGesture
-    //%block="SL06 get gesture"
+    //%block="SL06 gesture"
     //%group=Gesture
-    export function getGesture(): string {
+    export function gesture(): string {
         let fifo_level = 0;
         let bytes_read = 0;
         let gstatus: number;
@@ -752,7 +764,7 @@ namespace SL06 {
     //%block="SL06 enable proximity sensor %interrupts"
     //%interrupts.defl=false
     //%group=Proximity
-    export function enableProximitySensor(interrupts: boolean): void {
+    function enableProximitySensor(interrupts: boolean): void {
         /* Set default gain, LED, interrupts, enable power, and enable sensor */
         // DEFAULT_PGAIN
         setProximityGain(2)
@@ -774,7 +786,7 @@ namespace SL06 {
     //%blockId=SL06_disableProximitySensor
     //%block="SL06 disble proximity sensor"
     //%group=Proximity
-    export function disableProximitySensor(): void {
+    function disableProximitySensor(): void {
         setProximityIntEnable(0)
 
         setMode(2, 0)
@@ -803,7 +815,7 @@ namespace SL06 {
     //%block="SL06 get proximity gain"
     //%advanced=true
     //%group=Proximity
-    export function getProximityGain(): number {
+    function getProximityGain(): number {
         let val = 0;
 
         /* Read value from CONTROL register */
@@ -820,7 +832,7 @@ namespace SL06 {
     //%block="SL06 set proximity gain %drive"
     //%advanced=true
     //%group=Proximity
-    export function setProximityGain(drive: NumberFormat.UInt8BE): void {
+    function setProximityGain(drive: NumberFormat.UInt8BE): void {
         let val: number;
 
         /* Read value from CONTROL register */
@@ -839,9 +851,9 @@ namespace SL06 {
     }
 
     //%blockId=SL06_getProximity
-    //%block="SL06 get proximity"
+    //%block="SL06 proximity"
     //%group=Proximity
-    export function getProximity() {
+    export function proximity() {
         let val: number = 0;
 
         /* Read value from proximity data register */
@@ -855,7 +867,7 @@ namespace SL06 {
     //%block="SL06 enable light sensor %interrupts"
     //%interrupts.defl=false
     //%group=Light
-    export function enableLightSensor(interrupts: boolean): void {
+    function enableLightSensor(interrupts: boolean): void {
 
         /* Set default gain, interrupts, enable power, and enable sensor */
         setAmbientLightGain(0)
@@ -876,7 +888,7 @@ namespace SL06 {
     //%blockId=SL06_disableLightSensor
     //%block="SL06 disable light sensor"
     //%group=Light
-    export function disableLightSensor(): void {
+    function disableLightSensor(): void {
         setAmbientLightIntEnable(0)
 
         // AMBIENT_LIGHT
@@ -888,7 +900,7 @@ namespace SL06 {
     //%block="SL06 get ambient light gain"
     //%group=Light
     //%advanced=true
-    export function getAmbientLightGain(): number {
+    function getAmbientLightGain(): number {
         let val: number;
 
         /* Read value from CONTROL register */
@@ -905,7 +917,7 @@ namespace SL06 {
     //%block="SL06 set ambient light gain %drive"
     //%group=Light
     //%advanced=true
-    export function setAmbientLightGain(drive: number): void {
+    function setAmbientLightGain(drive: number): void {
         let val: number;
 
         /* Read value from CONTROL register */
@@ -926,16 +938,16 @@ namespace SL06 {
     //%block="SL06 clear ambient light int"
     //%group=Light
     //%advanced=true
-    export function clearAmbientLightInt(): void {
+    function clearAmbientLightInt(): void {
         let throwaway: number;
         // APDS9960_AICLEAR
         throwaway = wireReadDataByte(0xE7)
     }
 
     //%blockId=SL06_getAmbientLight
-    //%block="SL06 get ambient light"
+    //%block="SL06 illuminance %u"
     //%group=Light
-    export function getAmbientLight(): number {
+    export function ambientLight(u: light_unit): number {
         let val_byte: number;
         let val: number = 0;
 
@@ -949,13 +961,16 @@ namespace SL06 {
         val_byte = wireReadDataByte(0x95)
         val = val + (val_byte << 8);
 
+        if(u == light_unit.FC)
+            val = val/10.764
+
         return val
     }
 
     //%blockId=SL06_getRedLight
-    //%block="SL06 get red light"
+    //%block="SL06 red light"
     //%group=Light
-    export function getRedLight(): number {
+    export function redLight(): number {
         let val_byte: number;
         let val: number = 0;
 
@@ -972,9 +987,9 @@ namespace SL06 {
     }
 
     //%blockId=SL06_getGreenLight
-    //%block="SL06 get green light"
+    //%block="SL06 green light"
     //%group=Light
-    export function getGreenLight(): number {
+    export function greenLight(): number {
         let val_byte: number;
         let val: number = 0;
 
@@ -994,9 +1009,9 @@ namespace SL06 {
     }
 
     //%blockId=SL06_getBlueLight
-    //%block="SL06 get blue light"
+    //%block="SL06 blue light"
     //%group=Light
-    export function getBlueLight(): number {
+    export function blueLight(): number {
         let val_byte: number;
         let val: number = 0;
 
