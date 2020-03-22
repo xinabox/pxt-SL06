@@ -1193,7 +1193,7 @@ namespace SL06 {
     function wireReadDataBlock(reg: NumberFormat.UInt8LE, len: number): number[] {
         let buff: number[] = []
 
-        pins.i2cWriteNumber(APDS9960_I2C_ADDR, reg, NumberFormat.UInt8LE, true);
+        pins.i2cWriteNumber(APDS9960_I2C_ADDR, reg, NumberFormat.UInt8LE);
         for (let i = 0; i < len - 1; i++) {
             buff[i] = pins.i2cReadNumber(APDS9960_I2C_ADDR, NumberFormat.UInt8LE, true);
         }
