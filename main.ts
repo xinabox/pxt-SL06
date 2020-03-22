@@ -49,8 +49,7 @@ namespace SL06 {
     let gesture_state_ = 0;
     let gesture_motion_ = DIR_NONE;
 
-    export enum light_unit
-    {
+    export enum light_unit {
         //% block="LUX"
         LUX = 1,
         //% block="FC"
@@ -252,7 +251,7 @@ namespace SL06 {
         setLEDBoost(3)
 
         setGestureIntEnable(0)
-        
+
         setGestureMode(1)
 
         enablePower()
@@ -946,8 +945,8 @@ namespace SL06 {
         val_byte = wireReadDataByte(0x95)
         val = val + (val_byte << 8);
 
-        if(u == light_unit.FC)
-            val = val/10.764
+        if (u == light_unit.FC)
+            val = val / 10.764
 
         return val
     }
@@ -1194,10 +1193,11 @@ namespace SL06 {
     function wireReadDataBlock(reg: NumberFormat.UInt8BE, len: number): number[] {
         let buff: number[] = []
 
-        pins.i2cWriteNumber(APDS9960_I2C_ADDR, reg, NumberFormat.UInt8BE);
-        for (let i = 0; i < len; i++) {
-            buff[i] = pins.i2cReadNumber(APDS9960_I2C_ADDR, NumberFormat.UInt8BE)
+        pins.i2cWriteNumber(APDS9960_I2C_ADDR, reg, NumberFormat.UInt8BE, true);
+        for (let i = 0; i < len - 1; i++) {
+            buff[i] = pins.i2cReadNumber(APDS9960_I2C_ADDR, NumberFormat.UInt8BE, true);
         }
+        buff[len - 1] = pins.i2cReadNumber(APDS9960_I2C_ADDR, NumberFormat.UInt8BE, false);
 
 
         return buff
