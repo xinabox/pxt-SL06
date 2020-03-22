@@ -1190,14 +1190,14 @@ namespace SL06 {
         return val
     }
 
-    function wireReadDataBlock(reg: NumberFormat.UInt8BE, len: number): number[] {
+    function wireReadDataBlock(reg: NumberFormat.UInt8LE, len: number): number[] {
         let buff: number[] = []
 
-        pins.i2cWriteNumber(APDS9960_I2C_ADDR, reg, NumberFormat.UInt8BE, true);
+        pins.i2cWriteNumber(APDS9960_I2C_ADDR, reg, NumberFormat.UInt8LE, true);
         for (let i = 0; i < len - 1; i++) {
-            buff[i] = pins.i2cReadNumber(APDS9960_I2C_ADDR, NumberFormat.UInt8BE, true);
+            buff[i] = pins.i2cReadNumber(APDS9960_I2C_ADDR, NumberFormat.UInt8LE, true);
         }
-        buff[len - 1] = pins.i2cReadNumber(APDS9960_I2C_ADDR, NumberFormat.UInt8BE, false);
+        buff[len - 1] = pins.i2cReadNumber(APDS9960_I2C_ADDR, NumberFormat.UInt8LE, false);
 
 
         return buff
