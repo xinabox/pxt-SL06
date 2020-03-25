@@ -1193,17 +1193,17 @@ namespace SL06 {
     function wireReadDataBlock(reg: NumberFormat.UInt8LE, len: number): number[] {
         let buff: number[] = []
 
-        pins.i2cWriteNumber(APDS9960_I2C_ADDR, 0xFC, NumberFormat.UInt8LE,true);
-        buff[0] = pins.i2cReadNumber(APDS9960_I2C_ADDR, NumberFormat.UInt8LE, true);
+        pins.i2cWriteNumber(APDS9960_I2C_ADDR, 0xFC, NumberFormat.UInt8LE);
+        buff[0] = pins.i2cReadNumber(APDS9960_I2C_ADDR, NumberFormat.UInt8LE);
 
-        pins.i2cWriteNumber(APDS9960_I2C_ADDR, 0xFD, NumberFormat.UInt8LE, true);
-        buff[1] = pins.i2cReadNumber(APDS9960_I2C_ADDR, NumberFormat.UInt8LE, true);
+        pins.i2cWriteNumber(APDS9960_I2C_ADDR, 0xFD, NumberFormat.UInt8LE);
+        buff[1] = pins.i2cReadNumber(APDS9960_I2C_ADDR, NumberFormat.UInt8LE);
 
-        pins.i2cWriteNumber(APDS9960_I2C_ADDR, 0xFE, NumberFormat.UInt8LE, true);
-        buff[2] = pins.i2cReadNumber(APDS9960_I2C_ADDR, NumberFormat.UInt8LE, true);
+        pins.i2cWriteNumber(APDS9960_I2C_ADDR, 0xFE, NumberFormat.UInt8LE);
+        buff[2] = pins.i2cReadNumber(APDS9960_I2C_ADDR, NumberFormat.UInt8LE);
 
-        pins.i2cWriteNumber(APDS9960_I2C_ADDR, 0xFF, NumberFormat.UInt8LE, true);
-        buff[3] = pins.i2cReadNumber(APDS9960_I2C_ADDR, NumberFormat.UInt8LE, false);
+        pins.i2cWriteNumber(APDS9960_I2C_ADDR, 0xFF, NumberFormat.UInt8LE);
+        buff[3] = pins.i2cReadNumber(APDS9960_I2C_ADDR, NumberFormat.UInt8LE);
 
 
         return buff
