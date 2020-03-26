@@ -5,7 +5,7 @@
  * SL06 block
  */
 //% color=#444444 icon="\uf0eb"
-//% groups=[Colour,Light, Gesture, Proximity, Common, Optional]
+//% groups=[Mode, Colour,Light, Gesture, Proximity, Optional]
 namespace SL06 {
 
     let DIR_NONE = 'none'
@@ -30,7 +30,7 @@ namespace SL06 {
 
         //% block="PROXIMITY MODE"
         PROXIMITY_MODE,
-        
+
         //% block="GESTURE MODE"
         GESTURE_MODE
     };
@@ -754,26 +754,23 @@ namespace SL06 {
     }
 
     //%blockId=SL06_enabler
-    //%block="SL06 enable %u sensor"
+    //%block="SL06 enable %u"
     //%u.defl=1
     //%interrupts.defl=false
-    //%group=Common
+    //%group=Mode
     export function enable_mode(u: sl06_mode): void {
-        if(u == sl06_mode.LIGHT_MODE)
-        {
+        if (u == sl06_mode.LIGHT_MODE) {
             disableProximitySensor()
             disableGestureSensor()
             enableLightSensor()
-        }else if(u == sl06_mode.PROXIMITY_MODE)
-        {
+        } else if (u == sl06_mode.PROXIMITY_MODE) {
             disableLightSensor()
             disableGestureSensor()
             enableProximitySensor()
-        }else if(u == sl06_mode.GESTURE_MODE)
-        {
+        } else if (u == sl06_mode.GESTURE_MODE) {
             disableLightSensor()
             disableProximitySensor()
-            enableGestureSensor()    
+            enableGestureSensor()
         }
     }
 
