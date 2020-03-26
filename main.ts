@@ -24,9 +24,14 @@ namespace SL06 {
         ALL_STATE1
     };
 
-    enum sl06_mode {
+    export enum sl06_mode {
+        //% block="LIGHT MODE"
         LIGHT_MODE,
+
+        //% block="PROXIMITY MODE"
         PROXIMITY_MODE,
+        
+        //% block="GESTURE MODE"
         GESTURE_MODE
     };
 
