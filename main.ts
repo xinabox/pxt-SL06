@@ -5,7 +5,7 @@
  * SL06 block
  */
 //% color=#444444 icon="\uf0eb"
-//% groups=[Mode, Colour,Light, Gesture, Proximity, Optional]
+//% groups=['Mode', 'Light', 'Proximity', 'Gesture', 'Optional']
 namespace SL06 {
 
     let DIR_NONE = 'none'
