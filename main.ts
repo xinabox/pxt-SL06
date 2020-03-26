@@ -5,7 +5,7 @@
  * SL06 block
  */
 //% color=#444444 icon="\uf0eb"
-//% groups=[Colour,Light, Gesture, Proximity, Optional]
+//% groups=[Colour,Light, Gesture, Proximity, Common, Optional]
 namespace SL06 {
 
     let DIR_NONE = 'none'
@@ -22,6 +22,12 @@ namespace SL06 {
         NEAR_STATE1,
         FAR_STATE1,
         ALL_STATE1
+    };
+
+    enum sl06_mode {
+        LIGHT_MODE,
+        PROXIMITY_MODE,
+        GESTURE_MODE
     };
 
     let APDS9960_I2C_ADDR = 0x39;
@@ -228,11 +234,7 @@ namespace SL06 {
         setMode(0, 0)
     }
 
-    //%blockId=SL06_enableGestureSensor
-    //%block="SL06 enable gesture sensor"
-    //% interrupts.defl=false
-    //%group=Gesture
-    export function enableGestureSensor(): void {
+    function enableGestureSensor(): void {
 
         /* Enable gesture mode
            Set ENABLE to 0 (power off)
@@ -266,10 +268,7 @@ namespace SL06 {
         setMode(6, 1)
     }
 
-    //%blockId=SL06_disableGestureSensor
-    //%block="SL06 disable gesture sensor"
-    //%group=Gesture
-    export function disableGestureSensor() {
+    function disableGestureSensor() {
         resetGestureParameters();
         setGestureIntEnable(0)
 
@@ -749,11 +748,31 @@ namespace SL06 {
         return false;
     }
 
-    //%blockId=SL06_enableProximitySensor
-    //%block="SL06 enable proximity sensor"
+    //%blockId=SL06_enabler
+    //%block="SL06 enable %u sensor"
+    //%u.defl=1
     //%interrupts.defl=false
-    //%group=Proximity
-    export function enableProximitySensor(): void {
+    //%group=Common
+    export function enable_mode(u: sl06_mode): void {
+        if(u == sl06_mode.LIGHT_MODE)
+        {
+            disableProximitySensor()
+            disableGestureSensor()
+            enableLightSensor()
+        }else if(u == sl06_mode.PROXIMITY_MODE)
+        {
+            disableLightSensor()
+            disableGestureSensor()
+            enableProximitySensor()
+        }else if(u == sl06_mode.GESTURE_MODE)
+        {
+            disableLightSensor()
+            disableProximitySensor()
+            enableGestureSensor()    
+        }
+    }
+
+    function enableProximitySensor(): void {
         /* Set default gain, LED, interrupts, enable power, and enable sensor */
         // DEFAULT_PGAIN
         setProximityGain(2)
@@ -769,10 +788,7 @@ namespace SL06 {
 
     }
 
-    //%blockId=SL06_disableProximitySensor
-    //%block="SL06 disble proximity sensor"
-    //%group=Proximity
-    export function disableProximitySensor(): void {
+    function disableProximitySensor(): void {
         setProximityIntEnable(0)
 
         setMode(2, 0)
@@ -849,11 +865,7 @@ namespace SL06 {
         return val
     }
 
-    //%blockId=SL06_enableLightSensor
-    //%block="SL06 enable light sensor"
-    //%interrupts.defl=false
-    //%group=Light
-    export function enableLightSensor(): void {
+    function enableLightSensor(): void {
 
         /* Set default gain, interrupts, enable power, and enable sensor */
         setAmbientLightGain(0)
@@ -867,10 +879,7 @@ namespace SL06 {
 
     }
 
-    //%blockId=SL06_disableLightSensor
-    //%block="SL06 disable light sensor"
-    //%group=Light
-    export function disableLightSensor(): void {
+    function disableLightSensor(): void {
         setAmbientLightIntEnable(0)
 
         // AMBIENT_LIGHT
