@@ -755,6 +755,9 @@ namespace SL06 {
         return false;
     }
 
+    //%blockId="enable_mode"
+    //%block="SL06 enable %u"
+    //%u.defl=1
     export function enable_mode(u: sl06_mode): void {
         if (u == sl06_mode.LIGHT_MODE) {
             disableProximitySensor()
