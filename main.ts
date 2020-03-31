@@ -543,6 +543,23 @@ namespace SL06 {
         return DIR_ALL
     }
 
+    //%blockId="getGestureID"
+    //%block="SL06 get gesture ID"
+    export function getGestureID(): number {
+        let dir_id: number = 0
+        if (gesture_motion_ == DIR_UP) {
+            dir_id = 1
+        } else if (gesture_motion_ == DIR_RIGHT) {
+            dir_id = 2
+        } else if (gesture_motion_ == DIR_DOWN) {
+            dir_id = -1
+        } else if (gesture_motion_ == DIR_LEFT) {
+            dir_id = -2
+        }
+
+        return dir_id
+    }
+
     function decodeGesture(): boolean {
         /* Return if near or far event is detected */
         if (gesture_state_ == states.NEAR_STATE1) {
