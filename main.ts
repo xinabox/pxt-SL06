@@ -492,8 +492,6 @@ namespace SL06 {
             // APDS9960_GSTATUS
             gstatus = wireReadDataByte(0xAF);
 
-            console.logValue("gstatus", gstatus)
-
             /* If we have valid data, read in FIFO */
             if ((gstatus & 0b00000001) == 0b00000001) {
 
@@ -755,9 +753,11 @@ namespace SL06 {
         return false;
     }
 
-    //%blockId="enable_mode"
+    //%blockId=SL06_enabler
     //%block="SL06 enable %u"
     //%u.defl=1
+    //%interrupts.defl=false
+    //%group=Mode
     export function enable_mode(u: sl06_mode): void {
         if (u == sl06_mode.LIGHT_MODE) {
             disableProximitySensor()
@@ -789,7 +789,6 @@ namespace SL06 {
         setMode(2, 1)
 
     }
-
 
     function disableProximitySensor(): void {
         setProximityIntEnable(0)
@@ -1200,15 +1199,12 @@ namespace SL06 {
         return val
     }
 
-    function wireReadDataBlock(reg: NumberFormat.UInt8LE, len: number): number[] {
+    function wireReadDataBlock(reg: NumberFormat.UInt8BE, len: number): number[] {
         let buff: number[] = []
 
-        console.logValue("length", len)
-
-        pins.i2cWriteNumber(APDS9960_I2C_ADDR, reg, NumberFormat.UInt8LE, true);
-
-        for (let i: number = 0; i < len; i++) {
-            buff[i] = pins.i2cReadNumber(APDS9960_I2C_ADDR, NumberFormat.UInt8LE)
+        pins.i2cWriteNumber(APDS9960_I2C_ADDR, reg, NumberFormat.UInt8BE);
+        for (let i = 0; i < len; i++) {
+            buff[i] = pins.i2cReadNumber(APDS9960_I2C_ADDR, NumberFormat.UInt8BE)
         }
 
 
