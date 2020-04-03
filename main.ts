@@ -17,6 +17,8 @@ namespace SL06 {
     let DIR_FAR = 'far'
     let DIR_ALL = 'all'
 
+    let motion_global: string = ""
+
     enum states {
         NA_STATE1,
         NEAR_STATE1,
@@ -463,10 +465,10 @@ namespace SL06 {
         }
     }
 
-    //%blockId=SL06_getGesture
-    //%block="SL06 gesture"
+    //%blockId=SL06_readGesture
+    //%block="SL06 read gesture"
     //%group=Gesture
-    export function gesture(): string {
+    export function gesture() {
         let fifo_level = 0;
         let bytes_read = 0;
         let gstatus: number;
@@ -478,7 +480,7 @@ namespace SL06 {
 
         /* Make sure that power and gesture is on and data is valid */
         if (!isGestureAvailable() || !(mode)) {
-            return DIR_NONE;
+            return;
         }
 
         /* Keep looping as long as gesture data is valid */
@@ -534,31 +536,103 @@ namespace SL06 {
                 basic.pause(30);
                 decodeGesture();
                 motion = gesture_motion_;
+                motion_global = gesture_motion_
                 resetGestureParameters();
-                return motion;
-                console.log("Else")
+
+                if (motion == DIR_UP) {
+                    control.raiseEvent(5, 5)
+                } else if (motion == DIR_DOWN) {
+                    control.raiseEvent(5, 6)
+                } else if (motion == DIR_RIGHT) {
+                    control.raiseEvent(5, 7)
+                } else if (motion == DIR_LEFT) {
+                    control.raiseEvent(5, 8)
+                } else if (motion == DIR_NEAR) {
+                    control.raiseEvent(5, 9)
+                } else if (motion == DIR_FAR) {
+                    control.raiseEvent(5, 10)
+                }
+
+                return;
+
             }
         }
 
-        return DIR_ALL
     }
+
+    //%block="SL06 on gesture up"
+    //%group=Gesture
+    export function onGestureUp(handler: () => void) {
+        control.onEvent(5, 5, function () {
+            handler()
+        })
+    }
+
+    //%block="SL06 on gesture down"
+    //%group=Gesture
+    export function onGestureDown(handler: () => void) {
+        control.onEvent(5, 6, function () {
+            handler()
+        })
+    }
+
+    //%block="SL06 on gesture right"
+    //%group=Gesture
+    export function onGestureRight(handler: () => void) {
+        control.onEvent(5, 7, function () {
+            handler()
+        })
+    }
+
+    //%block="SL06 on gesture left"
+    //%group=Gesture
+    export function onGestureLeft(handler: () => void) {
+        control.onEvent(5, 8, function () {
+            handler()
+        })
+    }
+
+    //%block="SL06 on gesture near"
+    //%group=Gesture
+    export function onGestureNear(handler: () => void) {
+        control.onEvent(5, 9, function () {
+            handler()
+        })
+    }
+
+    //%block="SL06 on gesture far"
+    //%group=Gesture
+    export function onGestureFar(handler: () => void) {
+        control.onEvent(5, 10, function () {
+            handler()
+        })
+    }
+
 
     //%blockId="getGestureID"
     //%block="SL06 get gesture ID"
     export function getGestureID(): number {
         let dir_id: number = 0
-        if (gesture_motion_ == DIR_UP) {
+        if (motion_global == DIR_UP) {
             dir_id = 1
-        } else if (gesture_motion_ == DIR_RIGHT) {
+        } else if (motion_global == DIR_RIGHT) {
             dir_id = 2
-        } else if (gesture_motion_ == DIR_DOWN) {
-            dir_id = -1
-        } else if (gesture_motion_ == DIR_LEFT) {
-            dir_id = -2
+        } else if (motion_global == DIR_DOWN) {
+            dir_id = 3
+        } else if (motion_global == DIR_LEFT) {
+            dir_id = 4
+        } else if (motion_global == DIR_NEAR) {
+            dir_id = 5
+        } else if (motion_global == DIR_FAR) {
+            dir_id = 6
+        } else {
+            dir_id = 0
         }
 
         return dir_id
     }
+
+
 
     function decodeGesture(): boolean {
         /* Return if near or far event is detected */
