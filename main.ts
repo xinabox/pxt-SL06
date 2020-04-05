@@ -592,17 +592,17 @@ namespace SL06 {
         })
     }
 
-    //%block="SL06 on gesture near"
+    //%block="SL06 on gesture towards"
     //%group=Gesture
-    export function onGestureNear(handler: () => void) {
+    export function onGestureTowards(handler: () => void) {
         control.onEvent(5, 9, function () {
             handler()
         })
     }
 
-    //%block="SL06 on gesture far"
+    //%block="SL06 on gesture away"
     //%group=Gesture
-    export function onGestureFar(handler: () => void) {
+    export function onGestureAway(handler: () => void) {
         control.onEvent(5, 10, function () {
             handler()
         })
