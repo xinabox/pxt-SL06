@@ -37,6 +37,26 @@ namespace SL06 {
         GESTURE_MODE
     };
 
+    export enum gestures {
+        //% block="LEFT"
+        LEFT,
+
+        //% block="RIGHT"
+        RIGHT,
+
+        //% block="UP"
+        UP,
+
+        //% block="DOWN"
+        DOWN,
+
+        //% block="AWAY"
+        AWAY,
+
+        //% block="TOWARDS"
+        TOWARDS
+    };
+
     let APDS9960_I2C_ADDR = 0x39;
     let APDS9960_ID_1 = 0xAB
     let APDS9960_ID_2 = 0X9c
@@ -560,52 +580,41 @@ namespace SL06 {
 
     }
 
-    //%block="SL06 on gesture up"
+    //%block="SL06 on gesture %u"
+    //%u.defl=1
     //%group=Gesture
-    export function onGestureUp(handler: () => void) {
-        control.onEvent(5, 5, function () {
-            handler()
-        })
-    }
+    export function onGesture(u: gestures, handler: () => void) {
+        if (u == gestures.LEFT) {
+            control.onEvent(5, 8, function () {
+                handler()
+            })
+        }
+        if (u == gestures.RIGHT) {
+            control.onEvent(5, 7, function () {
+                handler()
+            })
+        }
+        if (u == gestures.UP) {
+            control.onEvent(5, 5, function () {
+                handler()
+            })
+        }
+        if (u == gestures.DOWN) {
+            control.onEvent(5, 6, function () {
+                handler()
+            })
+        }
+        if (u == gestures.AWAY) {
+            control.onEvent(5, 10, function () {
+                handler()
+            })
+        }
 
-    //%block="SL06 on gesture down"
-    //%group=Gesture
-    export function onGestureDown(handler: () => void) {
-        control.onEvent(5, 6, function () {
-            handler()
-        })
-    }
-
-    //%block="SL06 on gesture right"
-    //%group=Gesture
-    export function onGestureRight(handler: () => void) {
-        control.onEvent(5, 7, function () {
-            handler()
-        })
-    }
-
-    //%block="SL06 on gesture left"
-    //%group=Gesture
-    export function onGestureLeft(handler: () => void) {
-        control.onEvent(5, 8, function () {
-            handler()
-        })
-    }
-
-    //%block="SL06 on gesture towards"
-    //%group=Gesture
-    export function onGestureTowards(handler: () => void) {
-        control.onEvent(5, 9, function () {
-            handler()
-        })
-    }
-
-    //%block="SL06 on gesture away"
-    //%group=Gesture
-    export function onGestureAway(handler: () => void) {
-        control.onEvent(5, 10, function () {
-            handler()
-        })
+        if (u == gestures.TOWARDS) {
+            control.onEvent(5, 9, function () {
+                handler()
+            })
+        }
     }
 
 
